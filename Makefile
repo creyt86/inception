@@ -1,0 +1,5 @@
+NAME = inception
+
+SRCS = 
+
+OBJS = 
