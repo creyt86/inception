@@ -1,0 +1,29 @@
+#
+# These groups are read by MariaDB server.
+# Use it for options that only the server (but not clients) should see
+#
+# See the examples of server my.cnf files in /usr/share/mysql
+
+# this is read by the standalone daemon and embedded servers
+[server]
+
+# this is only for the mysqld standalone daemon
+# indiquer à quelle catégorie va suivre la configuration suivante (c’est comme cela que fonctionne le fichier de configuration de MySQL)
+[mysqld]
+
+#
+# * Basic Settings
+#
+user                    = mysql
+pid-file                = /run/mysqld/mysqld.pid
+socket                  = /run/mysqld/mysqld.sock # précise également où MySQL peut trouver la socket pour communiquer
+port                    = 3306
+basedir                 = /usr
+datadir                 = /var/lib/mysql # précise notre dossier qui stockera notre base de données
+tmpdir                  = /tmp
+lc-messages-dir         = /usr/share/mysql
+#skip-external-locking
+
+# Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+bind-address            = 0.0.0.0 # permet a toutes les adresses IP de se connecter
