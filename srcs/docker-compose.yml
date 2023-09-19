@@ -12,7 +12,7 @@ services:
     networks:
       - docker-network #fait le lien entre les containers
     volumes:
-     - wordpress:/var/www/wordpress
+     - website:/var/www/wordpress
     depends_on:
      - mariadb
      - wordpress
@@ -32,7 +32,7 @@ services:
     networks:
       - docker-network
     volumes:
-      - mariadb:/var/lib/mysql
+      - database:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 2s
@@ -58,22 +58,20 @@ services:
     expose:
       - "9000"
     volumes:
-      - wordpress:/var/www/wordpress
+      - website:/var/www/wordpress
 
 volumes:
-  wordpress:
-    name: wordpress
-    driver: local
+  website:
+    name: website
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '${HOME}/data/wordpress'
-  mariadb:
-    name: mariadb
-    driver: local
+      device: '${HOME}/data/website'
+  database:
+    name: database
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '${HOME}/data/mariadb'
+      device: '${HOME}/data/database'
 networks:
   docker-network:
