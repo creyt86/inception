@@ -10,32 +10,70 @@ services:
     env_file:
       - .env
     networks:
-      - docker-network
-    #volumes:
-    #  - wp_volume:/var/www/html
-    #  - ./log/nginx:/var/log/nginx
-    #depends_on:
-    #  - wordpress
-
-#  wordpress:
-#    image: wordpress
+      - docker-network #fait le lien entre les containers
+    volumes:
+     - wordpress:/var/www/wordpress
+    depends_on:
+     - mariadb
+     - wordpress
 
   mariadb:
     container_name: mariadb
     build:
       context: requirements/mariadb
-      args:
-       - MYSQL_DATABASE=${MYSQL_DATABASE}
-       - MYSQL_USER=${MYSQL_USER}
-       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     env_file:
       - .env
-#    environment:
-#      MARIADB_ROOT_PASSWORD: tester
+    networks:
+      - docker-network
+    volumes:
+      - mariadb:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 2s
+      timeout: 10s
+      retries: 4
+      start_period: 10s
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
+    restart: always
+    env_file:
+      - .env
+    environment:
+       WORDPRESS_DB_HOST: mariadb
+       WORDPRESS_DB_USER: ${MYSQL_USER}
+       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - mariadb
+    networks:
+      - docker-network
+    expose:
+      - "9000"
+    volumes:
+      - wordpress:/var/www/wordpress
 
 volumes:
-  wp_volume:
+  wordpress:
+    name: wordpress
     driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${HOME}/data/wordpress'
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${HOME}/data/mariadb'
 networks:
   docker-network:
