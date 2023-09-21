@@ -1,25 +1,34 @@
 #!/bin/bash
+#---------- definir le user admin et le user pas admin ----------#
 
-mkdir -p /run/php
+# sleep 10 # wait for mariadb to be ready --> ajouté dans le docker-compose
 
-cd /var/www/wordpress
+mkdir -p /run/php #pour creer le dossier php-fpm
+cd /var/www/wordpress #pour se placer dans le dossier wordpress
 
-wp config create --path="/var/www/wordpress" --allow-root --dbname="${DB_NAME}" --dbuser="${DB_USER}" --dbpass="${DB_PASSWORD}" --dbhost="${DB_HOST}"
+# if ! wp-config.php, le creer
+wp config create --allow-root \
+				 --dbname=$DB_NAME \
+				 --dbuser=$DB_USER \
+				 --dbpass=$DB_PASSWORD \
+				 --dbhost=$DB_HOST:3306 \
+				#  --path='/var/www/wordpress'
+				# --dbhost=mariadb:3306 \ #si on utilise le nom du service dans le docker-compose
 
-wp core install \
-    --path="/var/www/wordpress" \
-    --url=${WP_URL} \
-    --title=${WP_TITLE} \
-    --admin_user=${WP_ADMIN_NAME} \
-    --admin_email=${WP_ADMIN_EMAIL} \
-    --admin_password=${WP_ADMIN_PWD} \
-    --skip-email \
-    --allow-root
+#pour configurer le second utilisateur et qu il se connecte automatiquement
+wp core install --allow-root \
+				--url=$WP_URL \
+				--title=$WP_TITLE \
+				--admin_user=$WP_ADMIN_NAME \
+				--admin_password=$WP_ADMIN_PWD \
+				--skip-email \
+				--path='/var/www/wordpress'
 
 wp user create --allow-root \
-    ${WP_USER_NAME} \
-    ${WP_USER_EMAIL} \
-    --role=author \
-    --user_pass=${WP_USER_PWD}
+				$WP_USER_NAME \
+				$WP_USER_EMAIL \
+				--role=author \
+				--user_pass=$WP_USER_PWD \
+				# --path='/var/www/wordpress' #pas besoin car deja dans le dossier
 
-/usr/sbin/php-fpm7.3 --nodaemonize
+/usr/sbin/php-fpm7.3 --nodaemonize #pour lancer php-fpm en foreground (1er plan)

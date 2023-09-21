@@ -6,11 +6,13 @@
 #l.13 rafraichir tout cela pour que MySQL le prenne en compte
 
 cat << EOF > /tmp/init_db.sql
-CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
-CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
-GRANT ALL ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
-ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('rootPwd');
+CREATE DATABASE IF NOT EXISTS $DB_NAME;
+CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';
+GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'%';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';
 FLUSH PRIVILEGES;
 EOF
 
-mysql -h localhost < /tmp/init_db.sql
+
+# mysql -h localhost < /tmp/init_db.sql # on demarre mysql dans le Dockerfile end demarrant le script
