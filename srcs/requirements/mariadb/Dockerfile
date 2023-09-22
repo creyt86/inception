@@ -17,14 +17,14 @@ COPY ./tools/mariadb.sh /tmp/mariadb.sh
 # COPY ./tools/init_db.sql.template /tmp/init_db.sql.template
 
 #pour installer le package vim pour terminal docker
-RUN apt install vim -y 
+# RUN apt install vim -y 
 
 #on authorise l execution du script et on le lance depuis le container
 RUN chmod +x /tmp/mariadb.sh
 
 #On creer un dossier data et on lui donne les droits pour que mysql puisse y acceder
 #-p permet de creer le dossier parent si il n existe pas et ne fait rien si il existe deja.
-RUN mkdir data && mkdir -p var/run/mysqld/ \ 
+RUN mkdir data && mkdir -p /var/run/mysqld/ \ 
 && chown -R mysql:mysql /var/run/mysqld \
 && chmod 777 /var/run/mysqld
 
