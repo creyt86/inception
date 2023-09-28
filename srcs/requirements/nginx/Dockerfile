@@ -8,7 +8,9 @@ FROM debian:buster
 # APT est un utilitaire de ligne de commande permettant d'installer, 
 # de mettre à jour, de supprimer et de gérer les paquets deb sur Debian et les distributions Linux associées.
 
-RUN apt-get update && apt upgrade && apt-get install -y nginx openssl
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y nginx openssl
 
 #pour installer le package vim pour terminal docker
 RUN apt install vim -y 

@@ -32,5 +32,4 @@ wp user create --allow-root \
 				--user_pass=$WP_USER_PASSWORD \
 				--path='/var/www/wordpress' #pas besoin car deja dans le dossier
 
-# echo test
 /usr/sbin/php-fpm7.3 --nodaemonize #pour lancer php-fpm en foreground (1er plan)

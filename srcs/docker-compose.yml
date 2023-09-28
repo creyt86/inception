@@ -21,7 +21,7 @@ services:
       # - "80:80" #pour le test
     depends_on:
       - wordpress
-      - mariadb
+      # - mariadb
     networks:
       - inceptionNetwork # network docker qui fait le lien entre les containers
 
@@ -38,6 +38,7 @@ services:
         - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD} # va chercher dans le .env
     volumes:
       - mariadb-data:/var/lib/mysql
+      # - mariadb-data:/var/run/mysqld
       # - wordpress-data:/var/www/wordpress
     container_name: mariadb
     restart: always

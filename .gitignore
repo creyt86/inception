@@ -1,0 +1,25 @@
+#Logs
+# .env
+
+#OS generated files
+*.DS_Store
+
+#Archives
+# /Users/creyt/Documents/42/INCEPTION/archive
+# ./archive
+# /archive
+
+
+#----------- INFOS ------------#
+
+# # Ignorer un fichier spécifique
+# chemin/vers/le/fichier
+
+# # Ignorer un dossier spécifique
+# chemin/vers/le/dossier/
+
+# # Ignorer tous les fichiers .log dans n'importe quel dossier
+# *.log
+
+# # Ignorer tous les fichiers .tmp dans n'importe quel dossier et sous-dossiers
+# **/*.tmp

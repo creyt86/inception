@@ -24,7 +24,7 @@ RUN chmod +x /tmp/mariadb.sh
 
 #On creer un dossier data et on lui donne les droits pour que mysql puisse y acceder
 #-p permet de creer le dossier parent si il n existe pas et ne fait rien si il existe deja.
-RUN mkdir data && mkdir -p /var/run/mysqld/ \ 
+RUN mkdir data && mkdir -p /var/run/mysqld \ 
 && chown -R mysql:mysql /var/run/mysqld \
 && chmod 777 /var/run/mysqld
 
@@ -38,4 +38,4 @@ RUN /tmp/mariadb.sh
 EXPOSE 3306
 
 #on lance le service mysql et -u pour lancer mysql en tant que user mysql autrement le lance en mode root (pas bien)
-CMD ["mysqld", "-u", "mysql", "--init-file", "/tmp/init_db.sql"]
+ENTRYPOINT ["mysqld", "-u", "mysql", "--init-file", "/tmp/init_db.sql"]
