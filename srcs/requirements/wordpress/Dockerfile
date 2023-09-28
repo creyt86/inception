@@ -1,7 +1,8 @@
 FROM debian:buster
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install php php-mysqli php-fpm wget mariadb-client -y
+# RUN apt-get install php php-mysqli php-fpm wget mariadb-client -y
+RUN apt-get install -y wget curl php7.3 php7.3-fpm php-mysql mariadb-client
 
 #install wget dans le dossier /var/www
 RUN wget https://fr.wordpress.org/wordpress-6.2.2-fr_FR.tar.gz -P /var/www

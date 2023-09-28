@@ -1,9 +1,9 @@
 #Create user
-#l.9 cree la table de data
-#l.10 cree un user 
-#l.11 a qui on donne tous les droits = administrateur
-#l.12 on change le mot de passe et les droits root pour limiter l'acces a l'admin
-#l.13 rafraichir tout cela pour que MySQL le prenne en compte
+#l.11 on change le mot de passe et les droits root pour limiter l'acces a l'admin
+#l.12 cree la table de data
+#l.13 cree un user 
+#l.14 a qui on donne tous les droits = administrateur
+#l.15 rafraichir tout cela pour que MySQL le prenne en compte
 
 touch /tmp/init_db.sql
 
@@ -14,7 +14,3 @@ CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';
 GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';
 FLUSH PRIVILEGES;
 EOF
-
-# ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';
-
-# mysql -h localhost < /tmp/init_db.sql # on demarre mysql dans le Dockerfile end demarrant le script
