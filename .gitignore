@@ -1,14 +1,10 @@
-#Logs
-# .env
+
+.env
 
 #OS generated files
 *.DS_Store
 
-#Archives
-# /Users/creyt/Documents/42/INCEPTION/archive
-# ./archive
-# /archive
-
+./inception/fr.subject_Inception.pdf
 
 #----------- INFOS ------------#
 

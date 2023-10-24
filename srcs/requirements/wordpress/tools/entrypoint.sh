@@ -19,7 +19,7 @@ wp config create --allow-root \
 wp core install --allow-root \
 				--url=$WP_URL \
 				--title=$WP_TITLE \
-				--admin_user=$WP_ADMIN_NAME \
+				--admin_user=$WP_ADMIN_USER \
 				--admin_password=$WP_ADMIN_PASSWORD \
                 --admin_email="${WP_ADMIN_MAIL}" \
 				--skip-email \

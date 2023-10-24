@@ -36,6 +36,7 @@ services:
         - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD} # va chercher dans le .env
     volumes:
       - mariadb-data:/var/lib/mysql
+      # - wordpress-data:/var/www/wordpress
     container_name: mariadb
     restart: always
     environment:
@@ -74,11 +75,18 @@ services:
       - inceptionNetwork
 
 volumes:
-  wp-volume:
-    driver: local
+  wordpress-data:
+    name: wordpress-data
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/creyt/data/wordpress-data'
   mariadb-data:
-  wordpress-data: 
-  nginx-conf:
+    name: mariadb-data
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/creyt/data/mariadb-data'
 
 networks:
   inceptionNetwork:
